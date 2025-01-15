@@ -29,6 +29,18 @@ class CharacterManager {
     }
 
     /**
+     * Function for quickly getting a character by its key.
+     * @param {string} cKey - Key that indexes the character in the map.
+     */
+    findCharacter(cKey) {
+        if (this.characterList.has(cKey)) {
+            return this.characterList.get(cKey);
+        }
+
+        console.log(`Character "${cKey}" was not found.`);
+    }
+    
+    /**
      * Function for creating a gender and adding it into the gender list.
      * @param {string} gName - Name of the gender.
      * @param {string[]} gPronouns - ALl the necessary pronouns.
@@ -61,7 +73,8 @@ class CharacterManager {
      * @param {string} cGenderKey - Key of the selected gender in the map.
      */
     createCharacter(cAliases, cGenderKey) {
-        const gender = this.genderList.get(cGenderKey);
+        // Creating a structured clone so that we can modify the gender.
+        const gender = structuredClone(this.genderList.get(cGenderKey));
         const newCharacter = new Character(cAliases, gender);
 
         // Creating the key for this character.
@@ -93,18 +106,6 @@ class CharacterManager {
             // No additional logic needed.
             character.deleteRelationship(cKey);
         }
-    }
-
-    /**
-     * Function for quickly getting a character by its key.
-     * @param {string} cKey - Key that indexes the character in the map.
-     */
-    findCharacter(cKey) {
-        if (this.characterList.has(cKey)) {
-            return this.characterList.get(cKey);
-        }
-
-        console.log(`Character "${cKey}" was not found.`);
     }
 
     /**
