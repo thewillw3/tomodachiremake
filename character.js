@@ -44,6 +44,21 @@ class Character {
     createRelationship(cKey) {
         this.relationships.set(cKey, 0.5);
     }
+
+    /**
+     * This function deletes a relationship from this character.
+     * @param {string} cKey - The character who is getting removed from the list.
+     */
+    deleteRelationship(cKey) {
+        // Potentially add a flag where this character can say lines like "Do you ever feel like you're forgetting someone?" or something.
+
+        if (!this.relationships.has(cKey)) {
+            console.log(`Character "${this.aliases[0]}" does not know "${cKey}."`);
+            return;
+        }
+        
+        this.relationships.delete(cKey);
+    }
 }
 
 // Modular gender system.
