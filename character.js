@@ -2,15 +2,18 @@
 class Character {
     aliases;
     gender;
+    relationships;
 
     /**
      * Constructor function for the Character class.
      * @param {string[]} cAliases - The list of the character's aliases: [firstName, lastName, nickName].
      * @param {Gender} cGender - The character's gender.
+     * @param {Map<string, number>} cRelationships - Map storing characters and their relationship scores.
      */
-    constructor(cAliases, cGender) {
+    constructor(cAliases, cGender, cRelationships=new Map()) {
         this.aliases = cAliases;
         this.gender = cGender;
+        this.relationships = cRelationships;
     }
     
     /**
@@ -32,6 +35,14 @@ class Character {
      */
     nickName() {
         return this.aliases[2];
+    }
+
+    /**
+     * This function adds a new relationship to this character's list.
+     * @param {string} cKey - The key of the character to establish a relationship with. 
+     */
+    createRelationship(cKey) {
+        this.relationships.set(cKey, 0.5);
     }
 }
 
