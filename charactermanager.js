@@ -1,16 +1,20 @@
+/* Make it so that people call their significant others "smol bean." */
+
+// This module is intended to manage everything related to characters and their interactions.
 class CharacterManager {
     characterList;
     genderList;
 
     /**
      * Constructor function for the character manager.
-     * @param {Map<string, Character>} cCharacterList - Map containing all characters in the game.
+     * @param {Map<string, Character>} cCharacterList - Map containing all characters in the game (Should be left blank).
+     * @param {Map<string, Gender>} cGenderList - Map containing all genders in the game (Should be left blank).
      */
-    constructor(cCharacterList=new Map()) {
+    constructor(cCharacterList=new Map(), cGenderList=new Map()) {
         this.characterList = cCharacterList;
 
         // Setting up the list of premade genders.
-        this.genderList = new Map();
+        this.genderList = cGenderList;
         // Male.
         this.genderList.set(
             "Male", 
@@ -38,6 +42,18 @@ class CharacterManager {
         }
 
         console.log(`Character "${cKey}" was not found.`);
+    }
+
+    /**
+     * Function for quickly getting a gender by its key.
+     * @param {string} gKey - Key that indexes the gender in the map.
+     */
+    findGender(gKey) {
+        if (this.genderList.has(gKey)) {
+            return this.genderList.get(gKey);
+        }
+
+        console.log(`Gender "${gKey}" was not found`);
     }
     
     /**
@@ -115,6 +131,33 @@ class CharacterManager {
      */
     createFriendship(cKeyOne, cKeyTwo) {
         this.findCharacter(cKeyOne).createRelationship(cKeyTwo);
-        this.findCharacter(cKeyTwo).createRelationship(cKeyOne);
+        this.findCharacter(cKeyTwo).createRelationship(cKeyOne); 
+
+        console.log(`"${cKeyOne}" and "${cKeyTwo}" have become friends!`);
+    }
+
+    /**
+     * Function for deleting a relationship between two people.
+     * @param {string} cKeyOne - Key to find the first character in the list.
+     * @param {string} cKeyTwo - Key to find the second character in the list.
+     */
+    deleteFriendship(cKeyOne, cKeyTwo) {
+        this.findCharacter(cKeyOne).deleteRelationship(cKeyTwo);
+        this.findCharacter(cKeyTwo).deleteRelationship(cKeyOne);
+
+        console.log(`"${cKeyOne}" and "${cKeyTwo}" are no longer friends.`);
+    }
+
+    /**
+     * Function that modifies a friendship between two people.
+     * @param {string} cKeyOne - Key to find the first character in the list.
+     * @param {string} cKeyTwo - Key to find the second character in the list.
+     * @param {number} cRelChange - Value in which to modify the relationship.
+     */
+    modifyFriendship(cKeyOne, cKeyTwo, cRelChange) {
+        this.findCharacter(cKeyOne).modifyRelationship(cKeyTwo, cRelChange);
+        this.findCharacter(cKeyTwo).modifyRelationship(cKeyOne, cRelChange);
+
+        console.log(`"${cKeyOne}" and "${cKeyTwo}" changed their relationship score by ${cRelChange}.`);
     }
 }
